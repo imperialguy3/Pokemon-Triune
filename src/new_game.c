@@ -209,6 +209,7 @@ void NewGameInitData(void)
     WarpToTruck();
     RunScriptImmediately(EventScript_ResetAllMapFlagsFrlg);
     RunScriptImmediately(EventScript_ResetAllMapFlags);
+    FlagSet(FLAG_SYS_B_DASH);
     if (gSaveBlock2Ptr->playerRegion == REGION_KANTO)
         RunScriptImmediately(EventScript_SetFlagIsFrlg);
     StringCopy(gSaveBlock2Ptr->rivalName, rivalName);

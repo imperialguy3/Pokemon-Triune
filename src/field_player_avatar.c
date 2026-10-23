@@ -927,20 +927,26 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
 
     ResetSpinTimer(); // Everything below will move the player a space, reset the timer.
     gPlayerAvatar.creeping = FALSE;
-    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+
+if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
+{
+    if (FlagGet(DN_FLAG_SEARCHING) && (heldKeys & A_BUTTON))
     {
-        if (FlagGet(DN_FLAG_SEARCHING) && (heldKeys & A_BUTTON))
-        {
-            gPlayerAvatar.creeping = TRUE;
-            PlayerWalkSlow(direction);
-        }
-        else
-        {
-            // speed 2 is fast, same speed as running
-            PlayerWalkFast(direction);
-        }
-        return;
+        gPlayerAvatar.creeping = TRUE;
+        PlayerWalkSlow(direction);
     }
+    else if (heldKeys & B_BUTTON)
+    {
+        // Hold B to surf faster
+        PlayerWalkFaster(direction);
+    }
+    else
+    {
+        // Normal surfing speed
+        PlayerWalkFast(direction);
+    }
+    return;
+}
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
      && (heldKeys & B_BUTTON)
